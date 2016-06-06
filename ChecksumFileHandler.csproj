@@ -7,8 +7,8 @@
     <ProjectGuid>{E721212C-CADB-4F34-85BE-059E5C15F2D3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HashListComparer</RootNamespace>
-    <AssemblyName>HashListComparer</AssemblyName>
+    <RootNamespace>ChecksumFileHandler</RootNamespace>
+    <AssemblyName>ChecksumFileHandler</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>7673d885</NuGetPackageImportStamp>
@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\CustomComparer.cs" />
     <Compile Include="Class\FileStruct.cs" />
     <Compile Include="Class\ListComparer.cs" />
     <Compile Include="Program.cs" />
