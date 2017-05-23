@@ -13,6 +13,7 @@ namespace ChecksumFileHandler
         private static string fakepath = @"C:\", checksumfile = new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location).Directory.FullName;
         static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
             List<string> CandidateList = new List<string>();
             //args = new string[] { @"C:\Users\Dev\Source\Repos\ChecksumFileHandler\bin\Debug\State_20160403.md5", @"C:\Users\Dev\Source\Repos\ChecksumFileHandler\bin\Debug\State_20160403-Sorted.md5" };
             //args = new string[] { @"C:\Users\Dev\Source\Repos\ChecksumFileHandler\bin\Debug\output_2016-05-07.md5" };
