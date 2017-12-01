@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\CustomComparer.cs" />
+    <Compile Include="Class\DamagedListComparer.cs" />
     <Compile Include="Class\FileStruct.cs" />
     <Compile Include="Class\ListComparer.cs" />
     <Compile Include="Program.cs" />
