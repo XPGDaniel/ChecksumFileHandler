@@ -16,8 +16,7 @@ namespace ChecksumFileHandler
         {
             Console.OutputEncoding = Encoding.UTF8;
             List<string> CandidateList = new List<string>();
-            //args = new string[] { @"C:\Users\Dev\Source\Repos\ChecksumFileHandler\bin\Debug\State_20160403.md5", @"C:\Users\Dev\Source\Repos\ChecksumFileHandler\bin\Debug\State_20160403-Sorted.md5" };
-            //args = new string[] { @"C:\Users\Dev\Source\Repos\ChecksumFileHandler\bin\Debug\output_2016-05-07.md5" };
+            //args = new string[] { @"C:\Users\Daniel\Source\Repos\ChecksumFileHandler\bin\Debug\checksums-DeleteIntersected.txt" };
             if (args.Length > 0 && args.Length <= 2)
             {
                 foreach (var s in args)
@@ -31,16 +30,10 @@ namespace ChecksumFileHandler
                 return;
             }
             Console.WriteLine("No. of inputs : " + CandidateList.Count);
-            //for (int i = StartingPoint; i < CandidateList.Count; i++)
-            //{
-            string output1 = "", output2 = "", output0 = "", outputD ="";
-            //int subfolderindex = 0;
+            string output1 = "", output2 = "", output0 = "", outputD = "";
             List<FileStruct> outputlist0 = null;
             List<FileStruct> outputlist1 = null;
             List<FileStruct> outputlist2 = null;
-            //List<FileStruct> firsthalf = null;
-            //List<FileStruct> Secondhalf = null;
-            //List<FileStruct> newlist = null;
             switch (Path.GetExtension(CandidateList[0]).ToLowerInvariant())
             {
                 case ".fva":
@@ -48,73 +41,12 @@ namespace ChecksumFileHandler
                     {
                         if (Path.GetExtension(CandidateList[i]).ToLowerInvariant() == ".fva")
                         {
-                            //XDocument xmlDoc = XDocument.Load(CandidateList[i]);
-                            //outputlist0 = xmlDoc.Descendants("fvx")
-                            //    .Elements().Select(entry => new FileStruct
-                            //    {
-                            //        Name = Path.Combine(fakepath, entry.Attribute("name").Value),
-                            //        hash = entry.Element("hash").Value.Trim(),
-                            //    })
-                            //    .OrderBy(r => Path.GetDirectoryName(r.Name))
-                            //    .Select(entry => new FileStruct
-                            //    {
-                            //        Name = entry.Name.Replace(fakepath, ""),
-                            //        hash = entry.hash.ToLowerInvariant(),
-                            //    }).ToList();
                             outputlist0 = Prepare_Source_Data(CandidateList[i], Path.GetExtension(CandidateList[i]).ToLowerInvariant());
                             output0 = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[i]) + "-Converted_from_FVA.md5");
 
                             output1 = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[i]) + "-Converted_from_FVA-Duplicated.txt");
                             Generate_Duplicated_ItemList(outputlist0, output1);
-                            //List<FileStruct> duplicateItems = outputlist0
-                            //    .GroupBy(x => x.hash)
-                            //    .Where(x => x.Count() > 1)
-                            //    .SelectMany(x => x).ToList();
-
-                            //if (duplicateItems.Any())
-                            //{
-                            //    StringBuilder builder = new StringBuilder();
-                            //    using (FileStream file = File.Create(output1))
-                            //    { }
-                            //    foreach (var fss in duplicateItems)
-                            //    {
-                            //        builder.Append(fss.hash + " *" + fss.Name).AppendLine();
-                            //    }
-                            //    if (builder.Length > 0)
-                            //    {
-                            //        using (TextWriter writer = File.CreateText(output1))
-                            //        {
-                            //            writer.Write(builder.ToString());
-                            //        }
-                            //        builder.Clear();
-                            //    }
-                            //}
                             Output_result(Sort(outputlist0), output0, false, false);
-                            //subfolderindex = outputlist0.FindIndex(a => a.Name.Contains("\\"));
-                            //firsthalf = outputlist0.Take(subfolderindex).OrderBy(x => x.Name).ToList();
-                            //Secondhalf = outputlist0.Skip(subfolderindex).OrderBy(x => x.Name).ToList();
-                            //newlist = Secondhalf.Concat(firsthalf).ToList();
-                            //if (newlist.Any())
-                            //{
-                            //    StringBuilder builder = new StringBuilder();
-                            //    using (FileStream file = File.Create(output0))
-                            //    { }
-                            //    foreach (var fss in newlist)
-                            //    {
-                            //        if (!fss.Name.ToLowerInvariant().Contains("thumbs.db"))
-                            //        {
-                            //            builder.Append(fss.hash + " *" + fss.Name).AppendLine();
-                            //        }
-                            //    }
-                            //    if (builder.Length > 0)
-                            //    {
-                            //        using (TextWriter writer = File.CreateText(output0))
-                            //        {
-                            //            writer.Write(builder.ToString());
-                            //        }
-                            //        builder.Clear();
-                            //    }
-                            //}
                         }
                     }
                     break;
@@ -124,41 +56,7 @@ namespace ChecksumFileHandler
                         if (Path.GetExtension(CandidateList[1]) == ".md5")
                         {
                             Console.WriteLine((CandidateList[0]) + " compare with " + (CandidateList[1]));
-                            //List<string> md5lines = null;
-                            //md5lines = File.ReadAllLines(CandidateList[0]).ToList();
-                            //Console.WriteLine((CandidateList[0]) + " Raw Rows : " + md5lines.Count);
-                            //md5lines = md5lines.Where(s => !string.IsNullOrEmpty(s)).Distinct().ToList();
-                            ////md5lines = File.ReadAllLines(CandidateList[0]).ToList();
-                            //Console.WriteLine((CandidateList[0]) + " Valid Rows : " + md5lines.Count);
-                            //outputlist1 = md5lines.Select(entry => new FileStruct
-                            //{
-                            //    Name = Path.Combine(fakepath, entry.Trim().Split('*')[1].Trim()),
-                            //    hash = entry.Trim().Split('*')[0].Trim(),
-                            //})
-                            //.OrderBy(r => Path.GetDirectoryName(r.Name))
-                            //.Select(entry => new FileStruct
-                            //{
-                            //    Name = entry.Name.Replace(fakepath, ""),
-                            //    hash = entry.hash.ToLowerInvariant(),
-                            //}).ToList();
                             outputlist1 = Prepare_Source_Data(CandidateList[0], Path.GetExtension(CandidateList[0]).ToLowerInvariant());
-
-                            //md5lines = File.ReadAllLines(CandidateList[1]).ToList();
-                            //Console.WriteLine((CandidateList[1]) + " Raw Rows : " + md5lines.Count);
-                            //md5lines = md5lines.Where(s => !string.IsNullOrEmpty(s)).Distinct().ToList();
-                            //Console.WriteLine((CandidateList[1]) + " Valid Rows : " + md5lines.Count);
-                            //outputlist2 = md5lines.Select(entry => new FileStruct
-                            //{
-                            //    Name = Path.Combine(fakepath, entry.Trim().Split('*')[1].Trim()),
-                            //    hash = entry.Trim().Split('*')[0].Trim(),
-                            //})
-                            //.OrderBy(r => Path.GetDirectoryName(r.Name))
-                            //.Select(entry => new FileStruct
-                            //{
-                            //    Name = entry.Name.Replace(fakepath, ""),
-                            //    hash = entry.hash.ToLowerInvariant(),
-                            //}).ToList();
-
                             outputlist2 = Prepare_Source_Data(CandidateList[1], Path.GetExtension(CandidateList[1]).ToLowerInvariant());
 
                             output0 = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[0]) + "-Intersected.txt");
@@ -174,178 +72,30 @@ namespace ChecksumFileHandler
                             List<FileStruct> secondNotFirst = outputlist2.Except<FileStruct>(outputlist1, new ListComparer()).ToList();
                             Output_result(Intersected, output0, true, false);
                             Output_result(Damaged, outputD, true, false);
-                            //if (Intersected.Any())
-                            //{
-                            //    StringBuilder builder = new StringBuilder();
-                            //    using (FileStream file = File.Create(output0))
-                            //    { }
-                            //    foreach (var fss in Intersected)
-                            //    {
-                            //        //if (!fss.Name.ToLowerInvariant().Contains("thumbs.db"))
-                            //        //{
-                            //        builder.Append(fss.hash + " *" + fss.Name).AppendLine();
-                            //        //}
-                            //    }
-                            //    if (builder.Length > 0)
-                            //    {
-                            //        using (TextWriter writer = File.CreateText(output0))
-                            //        {
-                            //            writer.Write(builder.ToString());
-                            //        }
-                            //        builder.Clear();
-                            //    }
-                            //}
                             Output_result(firstNotSecond, output1, true, false);
-                            //if (firstNotSecond.Any())
-                            //{
-                            //    StringBuilder builder = new StringBuilder();
-                            //    using (FileStream file = File.Create(output1))
-                            //    { }
-                            //    foreach (var fss in firstNotSecond)
-                            //    {
-                            //        //if (!fss.Name.ToLowerInvariant().Contains("thumbs.db"))
-                            //        //{
-                            //        builder.Append(fss.hash + " *" + fss.Name).AppendLine();
-                            //        //}
-                            //    }
-                            //    if (builder.Length > 0)
-                            //    {
-                            //        using (TextWriter writer = File.CreateText(output1))
-                            //        {
-                            //            writer.Write(builder.ToString());
-                            //        }
-                            //        builder.Clear();
-                            //    }
-                            //}
                             Output_result(secondNotFirst, output2, true, false);
-                            //if (secondNotFirst.Any())
-                            //{
-                            //    StringBuilder builder = new StringBuilder();
-                            //    using (FileStream file = File.Create(output2))
-                            //    { }
-                            //    foreach (var fss in secondNotFirst)
-                            //    {
-                            //        //if (!fss.Name.ToLowerInvariant().Contains("thumbs.db"))
-                            //        //{
-                            //        builder.Append(fss.hash + " *" + fss.Name).AppendLine();
-                            //        //}
-                            //    }
-                            //    if (builder.Length > 0)
-                            //    {
-                            //        using (TextWriter writer = File.CreateText(output2))
-                            //        {
-                            //            writer.Write(builder.ToString());
-                            //        }
-                            //        builder.Clear();
-                            //    }
-                            //}
                         }
                     }
                     else if (CandidateList.Count == 1) // find duplicated and sort
                     {
-                        //List<string> md5lines = File.ReadAllLines(CandidateList[0]).ToList();
-                        //Console.WriteLine(CandidateList[0] + " Raw Rows : " + md5lines.Count);
-                        //md5lines = md5lines.Where(s => !string.IsNullOrEmpty(s)).Distinct().ToList();
-                        //md5lines = File.ReadAllLines(CandidateList[0]).ToList();
-                        //Console.WriteLine(CandidateList[0] + " Valid Rows : " + md5lines.Count);
-                        //outputlist1 = md5lines.Select(entry => new FileStruct
-                        //{
-                        //    Name = Path.Combine(fakepath, entry.Trim().Split('*')[1].Trim()),
-                        //    hash = entry.Trim().Split('*')[0].Trim(),
-                        //})
-                        //.OrderBy(r => Path.GetDirectoryName(r.Name))
-                        //.Select(entry => new FileStruct
-                        //{
-                        //    Name = entry.Name.Replace(fakepath, ""),
-                        //    hash = entry.hash.ToLowerInvariant(),
-                        //}).ToList();
-
                         outputlist1 = Prepare_Source_Data(CandidateList[0], Path.GetExtension(CandidateList[0]).ToLowerInvariant());
-                        //outputlist2 = md5lines.Select(entry => new FileStruct
-                        //{
-                        //    Name = Path.Combine(fakepath, entry.Trim().Split('*')[1].Trim()),
-                        //    hash = entry.Trim().Split('*')[0].Trim(),
-                        //})
-                        //.OrderBy(r => Path.GetDirectoryName(r.Name))
-                        //.Select(entry => new FileStruct
-                        //{
-                        //    Name = entry.Name.Replace(fakepath, ""),
-                        //    hash = entry.hash,
-                        //}).ToList();
                         output1 = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[0]) + "-Sorted.md5");
-
-                        //List<FileStruct> duplicateItems = outputlist1
-                        //    .GroupBy(x => x.hash)
-                        //    .Where(x => x.Count() > 1)
-                        //    .SelectMany(x => x).ToList();
+                        output2 = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[0]) + "-Dedupped.md5");
                         output0 = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[0]) + "-Duplicated.txt");
-                        Generate_Duplicated_ItemList(outputlist1, output0);
-
-                        //if (duplicateItems.Any())
-                        //{
-                        //    StringBuilder builder = new StringBuilder();
-                        //    using (FileStream file = File.Create(output0))
-                        //    { }
-                        //    foreach (var fss in duplicateItems)
-                        //    {
-                        //        builder.Append(fss.hash + " *" + fss.Name).AppendLine();
-                        //    }
-                        //    if (builder.Length > 0)
-                        //    {
-                        //        using (TextWriter writer = File.CreateText(output0))
-                        //        {
-                        //            writer.Write(builder.ToString());
-                        //        }
-                        //        builder.Clear();
-                        //    }
-                        //}
-
+                        if (CandidateList[0].Contains("dedup"))
+                        {
+                            Generate_Distinct_ItemList(Sort(outputlist1), output2);
+                        }
+                        Generate_Duplicated_ItemList(outputlist1, output0);                        
                         Output_result(Sort(outputlist1), output1, false, false);
-                        //subfolderindex = outputlist1.FindIndex(a => a.Name.Contains("\\"));
-                        //firsthalf = outputlist1.Take(subfolderindex).OrderBy(x => x.Name).ToList();
-                        //Secondhalf = outputlist1.Skip(subfolderindex).OrderBy(x => x.Name).ToList();
-                        //newlist = Secondhalf.Concat(firsthalf).ToList();
-                        //if (newlist.Any())
-                        //{
-                        //    StringBuilder builder = new StringBuilder();
-                        //    using (FileStream file = File.Create(output1))
-                        //    { }
-                        //    foreach (var fss in newlist)
-                        //    {
-                        //        if (!fss.Name.ToLowerInvariant().Contains("thumbs.db"))
-                        //        {
-                        //            builder.Append(fss.hash + " *" + fss.Name).AppendLine();
-                        //        }
-                        //    }
-                        //    if (builder.Length > 0)
-                        //    {
-                        //        using (TextWriter writer = File.CreateText(output1))
-                        //        {
-                        //            writer.Write(builder.ToString());
-                        //        }
-                        //        builder.Clear();
-                        //    }
-                        //}
                     }
                     break;
                 case ".sfv":
                     if (CandidateList.Count == 1)
                     {
-                        //List<string> md5lines = null;
-                        //for (int i = 0; i < CandidateList.Count; i++)
-                        //{
-                        //md5lines = File.ReadAllLines(CandidateList[0]).ToList();
-                        //md5lines = md5lines.Where(s => !string.IsNullOrEmpty(s)).Distinct().ToList();
-                        //outputlist1 = md5lines.Select(entry => new FileStruct
-                        //{
-                        //    Name = entry.Substring(0, entry.IndexOfAny(new char[] { ' ', '\t' }, entry.LastIndexOf("."))).Trim(),
-                        //    hash = entry.Substring(entry.LastIndexOfAny(new char[] { ' ', '\t' })).Trim(),
-                        //}).ToList();
                         outputlist1 = Prepare_Source_Data(CandidateList[0], Path.GetExtension(CandidateList[0]).ToLowerInvariant());
                         StringBuilder builder = new StringBuilder();
                         bool Mismatch = false;
-                        //using (FileStream file = File.Create(output1))
-                        //{ }
                         foreach (var fss in outputlist1)
                         {
                             if (!fss.Name.ToLowerInvariant().Contains("thumbs.db"))
@@ -399,14 +149,76 @@ namespace ChecksumFileHandler
                 case ".txt":
                     if (CandidateList.Count == 1) // reverse and sort
                     {
-                        outputlist1 = Prepare_Source_Data(CandidateList[0], Path.GetExtension(CandidateList[0]).ToLowerInvariant());
-                        
-                        output1 = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[0]) + "-Reversed.txt");
-                                                
-                        Output_result(Sort(outputlist1), output1, false, true);
+                        if (CandidateList[0].Contains("VideoCorruptionChecks"))
+                        {
+                            List<string> loglines = File.ReadAllLines(CandidateList[0]).ToList();
+                            loglines = loglines.Where(s => !string.IsNullOrEmpty(s)).Distinct().ToList();
+                            Console.WriteLine(Path.GetFileNameWithoutExtension(CandidateList[0]) + " records : " + loglines.Count);
+                            string output_sanitized = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[0]) + "-Sanitized.txt");
+                            int pointer = 0;
+                            loglines = loglines.Where(s => !s.Contains("Error:     Last message repeated")).ToList();
+                            while (pointer < loglines.Count - 1)
+                            {
+                                string filename = loglines[pointer].Split(new string[] { "checking" }, StringSplitOptions.None)[0];
+                                if (loglines[pointer].Contains("checking...") && loglines[pointer + 1].Contains(filename) && loglines[pointer + 1].Contains("checks Completed"))
+                                {
+                                    loglines[pointer] = "";
+                                    loglines[pointer + 1] = "";
+                                    pointer += 2;
+                                }
+                                else
+                                {
+                                    pointer += 1;
+                                }
+                            }
+                            loglines = loglines.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                            using (TextWriter tw = new StreamWriter(output_sanitized))
+                            {
+                                foreach (String s in loglines)
+                                {
+                                    tw.WriteLine(s);
+                                    if (s.Contains("checks Completed"))
+                                    {
+                                        tw.WriteLine("");
+                                    }
+                                }
+                            }
+                        }
+                        else if (CandidateList[0].Contains("DeleteIntersected") || CandidateList[0].Contains("DeleteDuplicated"))
+                        {
+                            try
+                            {
+                                List<FileStruct> filesTodelete = Prepare_Source_Data(CandidateList[0], Path.GetExtension(CandidateList[0]).ToLowerInvariant());
+
+                                foreach (var file in filesTodelete)
+                                {
+                                    Console.WriteLine("Delete " + file.Name);
+                                    try
+                                    {
+                                        File.Delete(Path.Combine(Path.GetDirectoryName(CandidateList[0]), file.Name));
+                                    }
+                                    catch (Exception)
+                                    {
+                                        Console.WriteLine(Path.Combine(Path.GetDirectoryName(CandidateList[0]), file.Name) + " delete failed or missing");
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.ToString());
+                            }
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            outputlist1 = Prepare_Source_Data(CandidateList[0], Path.GetExtension(CandidateList[0]).ToLowerInvariant());
+
+                            output1 = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[0]) + "-Reversed.txt");
+
+                            Output_result(Sort(outputlist1), output1, false, true);
+                        }
                     }
                     break;
-
             }
             //Console.ReadKey();
         }
@@ -427,6 +239,38 @@ namespace ChecksumFileHandler
 
             return files;
         }
+        static private void Generate_Distinct_ItemList(List<FileStruct> t, string output_filename)
+        {
+            try
+            {
+                List<FileStruct> distinctItems = t
+                                    .GroupBy(x => x.hash)
+                                    .Select(x => x.First()).ToList();
+
+                if (distinctItems.Any())
+                {
+                    StringBuilder builder = new StringBuilder();
+                    using (FileStream file = File.Create(output_filename))
+                    { }
+                    foreach (var fss in distinctItems)
+                    {
+                        builder.Append(fss.hash + " *" + fss.Name).AppendLine();
+                    }
+                    if (builder.Length > 0)
+                    {
+                        using (TextWriter writer = File.CreateText(output_filename))
+                        {
+                            writer.Write(builder.ToString());
+                        }
+                        builder.Clear();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         static private void Generate_Duplicated_ItemList(List<FileStruct> t, string output_filename)
         {
             try
@@ -439,24 +283,31 @@ namespace ChecksumFileHandler
                 if (duplicateItems.Any())
                 {
                     StringBuilder builder = new StringBuilder();
+                    StringBuilder builder2 = new StringBuilder();
                     using (FileStream file = File.Create(output_filename))
+                    { }
+                    using (FileStream file = File.Create(output_filename.Replace("-Duplicated", "-DeleteDuplicated")))
                     { }
                     string previousHash = "";
                     foreach (var fss in duplicateItems)
                     {
                         if (!string.IsNullOrEmpty(previousHash))
                         {
-                            if(fss.hash != previousHash)
-                            builder.AppendLine();
+                            if (fss.hash != previousHash)
+                            {
+                                builder.AppendLine();
+                                builder2.AppendLine();
+                            }
                         }
                         if (fss.Name.Contains("\\"))
                         {
-                            builder.Append(fss.hash + " * \"file://" + checksumfile + "\\" + fss.Name.Substring(0, fss.Name.LastIndexOf("\\") + 1) + "\" " + fss.Name.Substring(fss.Name.LastIndexOf("\\") + 1)).AppendLine();
+                            builder.Append("\"file://" + checksumfile + "\\" + fss.Name.Substring(0, fss.Name.LastIndexOf("\\") + 1) + "\" " + fss.Name.Substring(fss.Name.LastIndexOf("\\") + 1)).AppendLine();
                         }
                         else
                         {
-                            builder.Append(fss.hash + " * \"file://" + checksumfile + "\" " + fss.Name).AppendLine();
+                            builder.Append("\"file://" + checksumfile + "\" " + fss.Name).AppendLine();
                         }
+                        builder2.Append(fss.hash + " *" + fss.Name).AppendLine();
                         previousHash = fss.hash;
                     }
                     if (builder.Length > 0)
@@ -466,6 +317,11 @@ namespace ChecksumFileHandler
                             writer.Write(builder.ToString());
                         }
                         builder.Clear();
+                        using (TextWriter writer = File.CreateText(output_filename.Replace("-Duplicated", "-DeleteDuplicated")))
+                        {
+                            writer.Write(builder2.ToString());
+                        }
+                        builder2.Clear();
                     }
                 }
             }
@@ -578,27 +434,6 @@ namespace ChecksumFileHandler
             List<FileStruct> firsthalf = t.Take(subfolderindex).OrderBy(x => x.Name).ToList();
             List<FileStruct> Secondhalf = t.Skip(subfolderindex).OrderBy(x => x.Name).ToList();
             return new List<FileStruct>(Secondhalf.Concat(firsthalf).ToList());
-            //if (newlist.Any())
-            //{
-            //    StringBuilder builder = new StringBuilder();
-            //    using (FileStream file = File.Create(output_filename))
-            //    { }
-            //    foreach (var fss in newlist)
-            //    {
-            //        if (!fss.Name.ToLowerInvariant().Contains("thumbs.db"))
-            //        {
-            //            builder.Append(fss.hash + " *" + fss.Name).AppendLine();
-            //        }
-            //    }
-            //    if (builder.Length > 0)
-            //    {
-            //        using (TextWriter writer = File.CreateText(output_filename))
-            //        {
-            //            writer.Write(builder.ToString());
-            //        }
-            //        builder.Clear();
-            //    }
-            //}
         }
         static private void Output_result(List<FileStruct> t, string output_filename, bool isCompare, bool isReversed)
         {
@@ -615,7 +450,8 @@ namespace ChecksumFileHandler
                         {
                             builder.Append(fss.Name + " *" + fss.hash).AppendLine();
                         }
-                        else {
+                        else
+                        {
                             builder.Append(fss.hash + " *" + fss.Name).AppendLine();
                         }
                     }
@@ -650,7 +486,6 @@ namespace ChecksumFileHandler
                 return String.Empty;
 
             var sb = new StringBuilder();
-
             foreach (char @char in value)
             {
                 if (reservedCharacters.IndexOf(@char) == -1)
