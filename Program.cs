@@ -16,7 +16,7 @@ namespace ChecksumFileHandler
         {
             Console.OutputEncoding = Encoding.UTF8;
             List<string> CandidateList = new List<string>();
-            //args = new string[] { @"C:\Users\Daniel\Source\Repos\ChecksumFileHandler\bin\Debug\checksums-DeleteIntersected.txt" };
+            //args = new string[] { @"C:\Users\Daniel\Source\Repos\ChecksumFileHandler\bin\Debug\20181117_Downloaded.md5" };
             if (args.Length > 0 && args.Length <= 2)
             {
                 foreach (var s in args)
@@ -30,7 +30,7 @@ namespace ChecksumFileHandler
                 return;
             }
             Console.WriteLine("No. of inputs : " + CandidateList.Count);
-            string output1 = "", output2 = "", output0 = "", outputD = "";
+            string output1 = "", output2 = "", output0 = "", outputD = "", output3 = "";
             List<FileStruct> outputlist0 = null;
             List<FileStruct> outputlist1 = null;
             List<FileStruct> outputlist2 = null;
@@ -81,13 +81,14 @@ namespace ChecksumFileHandler
                         outputlist1 = Prepare_Source_Data(CandidateList[0], Path.GetExtension(CandidateList[0]).ToLowerInvariant());
                         output1 = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[0]) + "-Sorted.md5");
                         output2 = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[0]) + "-Dedupped.md5");
+                        output3 = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[0]) + "-Unsorted.md5");
                         output0 = Path.Combine(checksumfile, Path.GetFileNameWithoutExtension(CandidateList[0]) + "-Duplicated.txt");
                         if (CandidateList[0].Contains("dedup"))
                         {
                             Generate_Distinct_ItemList(Sort(outputlist1), output2);
                         }
                         Generate_Duplicated_ItemList(outputlist1, output0);                        
-                        Output_result(Sort(outputlist1), output1, false, false);
+                        Output_result(Sort(outputlist1), output1, false, false, output3);
                     }
                     break;
                 case ".sfv":
@@ -435,7 +436,7 @@ namespace ChecksumFileHandler
             List<FileStruct> Secondhalf = t.Skip(subfolderindex).OrderBy(x => x.Name).ToList();
             return new List<FileStruct>(Secondhalf.Concat(firsthalf).ToList());
         }
-        static private void Output_result(List<FileStruct> t, string output_filename, bool isCompare, bool isReversed)
+        static private void Output_result(List<FileStruct> t, string output_filename, bool isCompare, bool isReversed, string original_filename = null)
         {
             if (t.Any())
             {
@@ -477,6 +478,12 @@ namespace ChecksumFileHandler
                         writer.Write(builder.ToString());
                     }
                     builder.Clear();
+                }
+                if (!string.IsNullOrEmpty(original_filename))
+                {
+                    string source_filename = original_filename.Replace("-Unsorted.md5", ".md5");
+                    File.Move(source_filename, original_filename);
+                    File.Move(output_filename, source_filename);
                 }
             }
         }
